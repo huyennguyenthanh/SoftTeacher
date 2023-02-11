@@ -2,7 +2,7 @@ mmdet_base = "../../thirdparty/mmdetection/configs/_base_"
 _base_ = [
     f"{mmdet_base}/models/faster_rcnn_r50_fpn.py",
     f"{mmdet_base}/datasets/coco_detection.py",
-    f"{mmdet_base}/schedules/schedule_1x.py",
+    f"{mmdet_base}/schedules/schedule_2x.py",
     f"{mmdet_base}/default_runtime.py",
 ]
 
@@ -27,7 +27,7 @@ train_pipeline = [
         transforms=[
             dict(
                 type="RandResize",
-                img_scale=[(1333, 400), (1333, 1200)],
+                img_scale=[(600, 400),  (320,320)],
                 multiscale_mode="range",
                 keep_ratio=True,
             ),
@@ -74,7 +74,7 @@ test_pipeline = [
     dict(type="LoadImageFromFile"),
     dict(
         type="MultiScaleFlipAug",
-        img_scale=(1333, 800),
+        img_scale=(320, 320),
         flip=False,
         transforms=[
             dict(type="Resize", keep_ratio=True),
@@ -96,10 +96,11 @@ data = dict(
 )
 
 optimizer = dict(type="SGD", lr=0.01, momentum=0.9, weight_decay=0.0001)
-lr_config = dict(step=[120000, 160000])
-runner = dict(_delete_=True, type="IterBasedRunner", max_iters=180000)
-checkpoint_config = dict(by_epoch=False, interval=4000, max_keep_ckpts=10)
-evaluation = dict(interval=4000)
+lr_config = dict(step=[2200, 2800])
+runner = dict(_delete_=True, type="IterBasedRunner", max_iters=4000)
+checkpoint_config = dict(by_epoch=False, interval=1000, max_keep_ckpts=10)
+evaluation = dict(interval=100)
+
 
 fp16 = dict(loss_scale="dynamic")
 

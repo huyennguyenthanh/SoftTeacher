@@ -184,6 +184,7 @@ class DistributedGroupSemiBalanceSampler(Sampler):
 
         offset = len(self) * self.rank
         indices = indices[offset : offset + len(self)]
+        # import pdb; pdb.set_trace()
         assert len(indices) == len(self)
         return iter(indices)
 

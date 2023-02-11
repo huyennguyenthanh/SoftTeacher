@@ -6,6 +6,7 @@ pattern = re.compile("\$\{[a-zA-Z\d_.]*\}")
 
 def get_value(cfg: dict, chained_key: str):
     keys = chained_key.split(".")
+    # import pdb; pdb.set_trace()
     if len(keys) == 1:
         return cfg[keys[0]]
     else:
